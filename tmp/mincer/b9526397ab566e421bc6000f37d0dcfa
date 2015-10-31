@@ -1,0 +1,33 @@
+'use strict';
+
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+var TagScriptBuilder = (function () {
+    function TagScriptBuilder() {
+        _classCallCheck(this, TagScriptBuilder);
+
+        this.script = document.createElement('script');
+        this.script.type = 'text/javascript';
+        this.script.async = true;
+    }
+
+    _createClass(TagScriptBuilder, [{
+        key: 'addSrc',
+        value: function addSrc(src, tag, callback) {
+            if (tag === undefined) tag = null;
+
+            this.script.src = src;
+
+            this.script.addEventListener('load', function (e) {
+                callback(null, e);
+            }, false);
+
+            tag = document.getElementsByTagName('script')[0];
+            return tag.parentNode.insertBefore(this.script, tag);
+        }
+    }]);
+
+    return TagScriptBuilder;
+})();

@@ -3,6 +3,14 @@ html
   head
     title= title
     link(rel='stylesheet', href='/stylesheets/style.css')
+
     script(src='/socket.io/socket.io.js')
+
+    != LRScript
+    if settings.env == 'development'
+      != js('application.js')
+    else
+      != js('application.js', { async: true })
+
   body
     block content

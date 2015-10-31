@@ -1,0 +1,25 @@
+{
+  "name": "planning_poker",
+  "description": "",
+  "main": "",
+  "authors": [
+    "Saulo Santiago <saulodasilvasantiago@gmail.com>"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "planning_poker"
+  ],
+  "homepage": "https://github.com/SauloSilva/planning_poker",
+  "moduleType": [],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "devDependencies": {
+    "backbone.marionette": "marionette#~2.4.3",
+    "jade": "~1.11.0"
+  }
+}

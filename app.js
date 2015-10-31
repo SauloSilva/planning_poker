@@ -10,6 +10,17 @@ var users = require('./routes/users');
 
 var app = express();
 
+var env = process.env.NODE_ENV || app.get('env') || 'development';
+var environment = require(__dirname + '/lib/planning_poker')(app, env)
+
+app.use(environment.connectMincer.assets());
+
+if (env === 'production' || env === 'staging') {
+    app.use(express.static(__dirname + '/public'));
+} else {
+    app.use('/assets', environment.connectMincer.createServer());
+}
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
