@@ -1,4 +1,5 @@
 //= require jquery/dist/jquery
+//= require jquery.cookie/jquery.cookie
 //= require underscore/underscore
 //= require backbone/backbone
 //= require backbone.babysitter/lib/backbone.babysitter

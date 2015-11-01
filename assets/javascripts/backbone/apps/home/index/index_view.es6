@@ -12,18 +12,6 @@ PlanningPoker.module('HomeApp.Index', (Index, App, Backbone, Marionette) => {
         initialize() {
             this.template = 'home/index/templates/home';
         }
-
-        ui() {
-            return {
-                'googleAuthButton': 'a.google-auth-button'
-            }
-        }
-
-        triggers() {
-            return {
-                'click @ui.googleAuthButton': 'google:auth:clicked'
-            }
-        }
     }
 
     Index.LayoutView = LayoutView;

@@ -20,6 +20,8 @@
   ],
   "devDependencies": {
     "backbone.marionette": "marionette#~2.4.3",
-    "jade": "~1.11.0"
+    "backbone.localStorage": "1.1.16",
+    "jade": "~1.11.0",
+    "jquery.cookie": "~1.4.1"
   }
 }

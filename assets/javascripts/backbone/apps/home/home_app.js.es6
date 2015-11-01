@@ -4,14 +4,19 @@ PlanningPoker.module('HomeApp', (HomeApp, App, Backbone, Marionette) => {
     class Router extends Marionette.AppRouter {
         initialize() {
             this.appRoutes = {
-                '': 'home'
+                '': 'home',
+                'callback': 'callback'
             }
         }
     }
 
     let API = {
+        callback() {
+            new HomeApp.Callback.Controller();
+        },
+
         home() {
-            return new HomeApp.Index.Controller();
+            new HomeApp.Index.Controller();
         }
     };
 
