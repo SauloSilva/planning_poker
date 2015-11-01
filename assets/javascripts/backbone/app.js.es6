@@ -6,10 +6,13 @@ const PlanningPoker = ((Backbone, Marionette) => {
     });
 
     App.addInitializer(() => {
+        App.module('Utilities').start();
+
+        App.module('HomeApp').start();
     });
 
     App.on('start', () => {
-        console.log('--- started ---')
+        App.startHistory();
     });
 
     return App;

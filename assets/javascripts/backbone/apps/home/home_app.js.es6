@@ -1,0 +1,28 @@
+PlanningPoker.module('HomeApp', (HomeApp, App, Backbone, Marionette) => {
+    HomeApp.startWithParent = false;
+
+    class Router extends Marionette.AppRouter {
+        initialize() {
+            this.appRoutes = {
+                '': 'home'
+            }
+        }
+    }
+
+    let API = {
+        home() {
+            return new HomeApp.Index.Controller();
+        }
+    };
+
+    HomeApp.on('start', () => {
+        return new HomeApp.Router({ controller: API });
+    });
+
+    App.vent.on('visit:home', () => {
+        App.vent.trigger('visit', App.Utilities.Routes.rootPath());
+        API.home();
+    });
+
+    HomeApp.Router = Router;
+});

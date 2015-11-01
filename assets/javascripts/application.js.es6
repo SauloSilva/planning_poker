@@ -5,7 +5,6 @@
 //= require backbone.wreqr/lib/backbone.wreqr
 //= require backbone.marionette/lib/backbone.marionette
 
-
 //= require jade/runtime
 
 //= require ./lib/tag_script_builder
@@ -28,5 +27,5 @@
 //= require_self
 
 $(document).ready(() => {
-  PlanningPoker.start();
+    PlanningPoker.start();
 });
