@@ -51,7 +51,6 @@ PlanningPoker.module('Utilities', (Utilities, App, Backbone, Marionette, $, _) =
         startHistory() {
             if (Backbone.history) {
                 Backbone.history.start({ pushState: true });
-                console.log('----- startHistory -----');
             }
 
             $(document).on('click', 'a[data-internal]', (event) => {

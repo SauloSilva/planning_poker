@@ -1,5 +1,5 @@
-Skore.module('Components.Loading', (Loading, App, Backbone, Marionette) => {
-    class LoadView extends App.Views.ItemView {
+PlanningPoker.module('Components.Loading', (Loading, App, Backbone, Marionette) => {
+    class LoadView extends Marionette.ItemView {
         initialize() {
             this.template = false;
         }

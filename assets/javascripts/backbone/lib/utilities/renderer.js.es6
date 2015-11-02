@@ -17,7 +17,6 @@ PlanningPoker.module('Utilities', (Utilities, App, Backbone, Marionette, $, _) =
             if (templatePath) {
                 let template = JST[templatePath];
                 _.extend(data, API.helpers(templatePath));
-                console.log()
                 return template(data);
             } else {
                 throw `Template ${ template } not found!`;

@@ -18,10 +18,11 @@
     "test",
     "tests"
   ],
-  "devDependencies": {
+  "dependencies": {
     "backbone.marionette": "marionette#~2.4.3",
-    "backbone.localStorage": "1.1.16",
     "jade": "~1.11.0",
-    "jquery.cookie": "~1.4.1"
+    "jquery.cookie": "~1.4.1",
+    "backbone.syphon": "~0.6.3",
+    "underscore.string": "~3.2.2"
   }
 }

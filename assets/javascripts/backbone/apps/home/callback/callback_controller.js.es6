@@ -5,6 +5,8 @@ PlanningPoker.module('HomeApp.Callback', (Callback, App) => {
 
             App.execute('when:synchronized', googleInfo, () => {
                 googleInfo.save();
+
+                App.vent.trigger('visit:home');
             });
         }
     }

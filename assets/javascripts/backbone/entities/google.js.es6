@@ -14,7 +14,7 @@ PlanningPoker.module('Entities', (Entities, App) => {
     let API = {
         getGoogleInfo() {
             let googleInfo = new Entities.GoogleInfo();
-            googleInfo.fetch({ beforeSend: API.sendAuthentication })
+            googleInfo.fetch({ beforeSend: this.sendAuthentication })
 
             return googleInfo;
         },

@@ -1,7 +1,9 @@
 PlanningPoker.module('Entities', (Entities, App) => {
+    let users = void 0;
+
     class Users extends Backbone.Collection {
-        model() {
-            return Entities.User;
+        initialize() {
+            this.model = Entities.User;
         }
     }
 
@@ -28,6 +30,24 @@ PlanningPoker.module('Entities', (Entities, App) => {
     }
 
     let API = {
+        getUsers() {
+            if (_.isUndefined(users)) {
+                users = new Entities.Users();
+            }
+
+            return users;
+        },
+
+        addUsers(users) {
+            this.getUsers().reset()
+            this.getUsers().add(users)
+        },
+
+        removeUser(user) {
+            let userModel = this.getUsers().findWhere({ name: user.name });
+            this.getUsers().remove(userModel);
+        },
+
         getUser() {
             let user = new Entities.User();
             user.fetch()
@@ -35,8 +55,20 @@ PlanningPoker.module('Entities', (Entities, App) => {
         }
     };
 
+    App.reqres.setHandler('users:entities', () => {
+        return API.getUsers();
+    });
+
     App.reqres.setHandler('user:entity', () => {
         return API.getUser()
+    });
+
+    socket.on('remove:user', function (response) {
+        API.removeUser(response.user);
+    })
+
+    socket.on('users', function (response) {
+        API.addUsers(response.users);
     });
 
     Entities.Users = Users;
