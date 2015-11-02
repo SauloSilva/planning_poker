@@ -28,5 +28,5 @@ tmp/
 
 # Bower components
 vendor/assets/javascripts/bower_components
-public/assets/
 .sass-cache/
+public/

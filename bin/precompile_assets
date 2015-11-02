@@ -1,0 +1,62 @@
+#!/usr/bin/env node
+
+'use strict';
+var env = process.env.NODE_ENV || 'development';
+
+var Mincer = require('mincer'),
+    _ = require('underscore'),
+    uglifyjs = require('uglify-js'),
+    csso = require('csso'),
+    fs = require('fs'),
+    zlib = require('zlib'),
+    async = require('async'),
+    wrench = require('wrench'),
+    mountPoint = '/assets';
+
+require('mincer-babel')(Mincer);
+var environment = new Mincer.Environment('./');
+
+require(process.cwd() + '/lib/planning_poker/register_helper')(environment, env);
+
+environment.jsCompressor = 'uglify';
+environment.cssCompressor = 'csso';
+
+[
+    'assets/images',
+    'assets/stylesheets',
+    'vendor/assets/stylesheets',
+    'assets/javascripts',
+    'vendor/assets/javascripts',
+    'vendor/assets/javascripts/bower_components'
+].forEach(function(path) {
+    environment.appendPath(path);
+});
+
+var manifest = new Mincer.Manifest(environment, './public/assets');
+
+try {
+    console.info('Starting asset compilation');
+    var manifestData = manifest.compile(
+        ['application.js','application.css', '**/*.png', '**/*.jpg', '**/*.gif', '**/*.svg'],
+        { compress: true, sourceMaps: true, embedMappingComments: true }
+    );
+
+    var files = _(manifestData.files).keys();
+
+    async.each(files, function(file, done) {
+        if (file.match(/\.(js|css)/)) {
+            var inp = fs.createReadStream('./public/assets/' + file);
+            var gzip = zlib.createGzip({ level: 9 });
+            var out = fs.createWriteStream('./public/assets/' + file + '.gz');
+
+            inp.pipe(gzip).pipe(out).on('close', function() {
+                done();
+            });
+        }
+    }, function() {
+        console.info('Finished compiling ' + files.length + ' assets');
+    });
+
+} catch (err) {
+  console.error('Failed compile assets: ' + (err.message || err.toString()));
+}
