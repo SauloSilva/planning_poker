@@ -8,6 +8,11 @@ var app = require('../app');
 var debug = require('debug')('planning_poker:server');
 var http = require('http');
 
+var Logger = require('le_node');
+var log = new Logger({
+  token:'547a2339-64f8-4bca-99ff-79c417fd100d'
+});
+
 /**
  * Get port from environment and store in Express.
  */
