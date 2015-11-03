@@ -3,6 +3,6 @@
     "googleAuthCallbackURL": "http://planningpoker.com:3000/callback"
   },
   "production": {
-    "googleAuthCallbackURL": "http://infinite-savannah-3059.herokuapp.com/callback"
+    "googleAuthCallbackURL": "http://planningpokersmart.herokuapp.com/callback"
   }
 }
