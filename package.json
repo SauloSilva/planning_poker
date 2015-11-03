@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "postinstall": "node node_modules/bower/bin/bower install && node ./bin/precompile_assets",
+    "postinstall": "node node_modules/bower/bin/bower install",
+    "prestart": "node ./bin/precompile_assets",
     "start": "node ./bin/www"
   },
   "dependencies": {
