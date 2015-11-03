@@ -1,0 +1,7 @@
+.status
+  span.major
+  span.minor
+
+  span.action
+    - if (isOwner)
+      a(class= className(status))= text(status)

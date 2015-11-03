@@ -5,7 +5,7 @@ form
     label Room name
     input(name='roomName' type='text' value=roomName disabled=isDisabled(roomName))
   .form-group
-    input.submit(type='submit' value='Open' disabled=isDisabled(roomName))
-
-- if (isDisabled(roomName))
-  a.exit-room Exit room
+    - if (isDisabled(roomName))
+      a.exit-room Exit room
+    - else
+      input.submit(type='submit' value='Open' disabled=isDisabled(roomName))

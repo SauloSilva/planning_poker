@@ -8,6 +8,13 @@ PlanningPoker.module('Entities', (Entities, App) => {
     }
 
     class User extends Backbone.Model {
+        defaults() {
+            return {
+                status: 'unstarted',
+                value: undefined,
+            }
+        }
+
         fetch(options) {
             if (this.isLogged()) {
                 this.set($.cookie())
@@ -63,11 +70,11 @@ PlanningPoker.module('Entities', (Entities, App) => {
         return API.getUser()
     });
 
-    socket.on('remove:user', function (response) {
+    socket.on('remove:user', (response) => {
         API.removeUser(response.user);
     })
 
-    socket.on('users', function (response) {
+    socket.on('users', (response) => {
         API.addUsers(response.users);
     });
 

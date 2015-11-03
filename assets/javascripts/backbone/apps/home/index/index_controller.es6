@@ -3,6 +3,8 @@ PlanningPoker.module('HomeApp.Index', (Index, App) => {
         initialize() {
             this.layout = this.getLayout();
             this.user = App.request('user:entity');
+            this.users = App.request('users:entities');
+            this.room = App.request('room:entity');
 
             this.listenTo(this.layout, 'show', () => {
                 App.execute('when:synchronized', this.user, () => {
@@ -31,11 +33,16 @@ PlanningPoker.module('HomeApp.Index', (Index, App) => {
         }
 
         inputRoomNameRegion() {
+            window.foo = this.layout;
+
             let getInputRoomNameView = this.getInputRoomNameView();
 
             this.listenTo(getInputRoomNameView, 'exit:room:button:clicked', (args) => {
                 args.model.leave();
                 args.view.render();
+
+                this.layout.statusRegion.empty()
+                this.layout.usersRegion.empty()
             });
 
             this.listenTo(getInputRoomNameView, 'form:submitted', (args) => {
@@ -51,6 +58,9 @@ PlanningPoker.module('HomeApp.Index', (Index, App) => {
                     }));
 
                     args.view.render();
+
+                    this.statusRegion();
+                    this.usersRegion();
                 }
             });
 
@@ -59,6 +69,14 @@ PlanningPoker.module('HomeApp.Index', (Index, App) => {
 
         buttonGoogleAuthViewRegion() {
             this.layout.buttonGoogleAuthRegion.show(this.getButtonGoogleAuthView())
+        }
+
+        statusRegion() {
+            this.layout.statusRegion.show(this.getStatusView());
+        }
+
+        usersRegion() {
+            this.layout.usersRegion.show(this.getUsersView());
         }
 
         getHomeView() {
@@ -71,8 +89,20 @@ PlanningPoker.module('HomeApp.Index', (Index, App) => {
 
         getInputRoomNameView() {
             return new Index.InputRoomNameView({
-                model: App.request('room:entity')
+                model: this.room
             });
+        }
+
+        getStatusView() {
+            return new Index.StatusView({
+                model: this.room
+            })
+        }
+
+        getUsersView() {
+            return new Index.UsersView({
+                collection: this.users
+            })
         }
     };
 

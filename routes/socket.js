@@ -19,48 +19,56 @@ var SocketRoute = function (app) {
                     user: user
                 });
 
-                console.log(rooms, 'delete before');
-
                 room[roomName] = _.without(roomUsers, _.findWhere(roomUsers, {
                     id: req.socket.id
                 }));
 
-                console.log(rooms, 'delete after');
+                if (user.isOwner && room[roomName][0]) {
+                    room[roomName][0].isOwner = true
+                    app.io.sockets.socket(room[roomName][0].id).emit('isOwner');
+                }
 
                 req.io.leave(roomName);
             }
         })
     });
 
-    app.io.route('ready/foo', function(req) {
+    app.io.route('ready', function(req) {
         var getRoom = _.find(rooms, req.data.roomName)
+        var isOwner = false;
 
         if (_.isUndefined(getRoom)) {
             var room = {}
+            isOwner = true;
 
-            console.log('if---')
             room[req.data.roomName] = [{
-                isOwner: true,
+                isOwner: isOwner,
                 id: req.socket.id,
                 name: req.data.name,
-                picture: req.data.picture
+                picture: req.data.picture,
+                status: 'unstarted',
+                value: ''
             }];
 
             rooms.push(room);
         } else {
-            console.log(getRoom[req.data.roomName], 'users---before')
+            isOwner = _.isEmpty(getRoom[req.data.roomName])
+
             getRoom[req.data.roomName].push({
+                isOwner: isOwner,
                 id: req.socket.id,
                 name: req.data.name,
-                picture: req.data.picture
+                picture: req.data.picture,
+                status: 'unstarted',
+                value: ''
             });
-            console.log(getRoom[req.data.roomName], 'users---after')
         }
-
 
         req.io.join(req.data.roomName)
 
-        console.log('add');
+        if (isOwner) {
+            app.io.sockets.socket(req.socket.id).emit('isOwner');
+        }
 
         app.io.sockets.in(req.data.roomName).emit('users', {
             users: _.find(rooms, req.data.roomName)[req.data.roomName]
